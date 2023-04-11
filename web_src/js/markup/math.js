@@ -13,6 +13,14 @@ function targetElement(el) {
 }
 
 export async function renderMath() {
+  const pdfContainer = document.querySelectorAll('#pdfContainer')[0];
+
+  const [{default: PDFObject}] = await Promise.all([
+    import(/* webpackChunkName: "pdfobject" */'pdfobject'),
+  ]);
+  PDFObject.embed(pdfContainer.getAttribute("data-path"), "#pdfContainer");
+
+
   const els = document.querySelectorAll('.markup code.language-math');
   if (!els.length) return;
 
